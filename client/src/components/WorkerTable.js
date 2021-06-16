@@ -26,7 +26,6 @@ const columns = [
     { id: 'number', label: 'Tel. nr.' },
     { id: 'email', label: 'El. paštas' },
     { id: 'address', label: 'Adresas' },
-    // {edit: 'edit', label: 'Keisti'}
 
 ];
 
@@ -67,7 +66,7 @@ const WorkerTable = () => {
                     <TableBody>
                         {rows.map((row) => {
                             return (
-                                <TableRow hover tabIndex={-1} key={row._id} checkboxSelection>
+                                <TableRow hover tabIndex={-1} key={row._id} >
                                     {columns.map((column) => {
                                         const value = row[column.id];
                                         return (
@@ -76,7 +75,7 @@ const WorkerTable = () => {
                                             </TableCell>
                                         );
                                     })}
-                                    <Checkbox style={{padding: '16px 0'}} key={row._id} />
+                                    <Checkbox component='td' style={{padding: '16px 0'}} key={row._id} />
                                 </TableRow>
                             );
                         })}
