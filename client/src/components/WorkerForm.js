@@ -4,11 +4,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 /* ------------------------------------------ */
 
-// components
+// material-ui components
 import { Container, makeStyles, Grid, Button, TextField, MenuItem, Box, Typography } from '@material-ui/core';
 /* ------------------------------------------ */
 
-// makeStyles
+// material-ui makeStyles
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: '100px auto',
@@ -61,11 +61,13 @@ const validationSchema = Yup.object({
 /* ------------------------------------------ */
 
 function App() {
+    // useFormik
     const formik = useFormik({
         initialValues,
         onSubmit,
         validationSchema
     });
+    /* ------------------------------------------ */
 
     const classes = useStyles();
 

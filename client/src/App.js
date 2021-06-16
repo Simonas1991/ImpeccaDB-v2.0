@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 // components
 import WorkerForm from './components/WorkerForm'
+import WorkerTable from './components/WorkerTable';
 /* ------------------------------------------ */
 
 // css
@@ -34,6 +35,7 @@ const App = () => {
 
   return (
     <WorkersContext.Provider value={{ workers }}>
+      <WorkerTable />
       <WorkerForm />
     </WorkersContext.Provider>
   )
