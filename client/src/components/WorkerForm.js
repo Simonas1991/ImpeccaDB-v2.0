@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 /* ------------------------------------------ */
 
 // components
-import { Container, makeStyles, Grid, Button, TextField, MenuItem, Box } from '@material-ui/core';
+import { Container, makeStyles, Grid, Button, TextField, MenuItem, Box, Typography } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // makeStyles
@@ -158,21 +158,27 @@ function App() {
                             onChange={formik.handleChange}
                             label="Pasirinkite statusą"
                         >
-                            <MenuItem name='nostaus' value='nostatus'>Be statuso</MenuItem>
-                            <MenuItem name='work' value='work'>Komandiruotė</MenuItem>
-                            <MenuItem name='holiday' value='holiday'>Neapmokamos atostogos</MenuItem>
+                            <MenuItem name='nostaus' value='nostatus'>
+                                <Typography>Be statuso</Typography>
+                            </MenuItem>
+                            <MenuItem name='work' value='work'>
+                                <Typography>Komandiruotė</Typography>
+                            </MenuItem>
+                            <MenuItem name='holiday' value='holiday'>
+                                <Typography>Neapmokamos atostogos</Typography>
+                            </MenuItem>
                         </TextField>
                     </Grid>
 
                     <Grid item xs={12} sm={3}>
                         <Button className={classes.button} variant="contained" color="secondary">
-                            Atšaukti
+                            <Typography>Atšaukti</Typography>
                         </Button>
                     </Grid>
 
                     <Grid item xs={12} sm={3}>
                         <Button className={classes.button} variant="contained" color="primary" type='submit'>
-                            Pridėti
+                            <Typography>Pridėti</Typography>
                         </Button>
                     </Grid>
 

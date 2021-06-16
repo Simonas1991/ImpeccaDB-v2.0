@@ -1,5 +1,5 @@
 // libs
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 /* ------------------------------------------ */
 
 // components
@@ -10,11 +10,32 @@ import WorkerForm from './components/WorkerForm'
 import './App.css';
 /* ------------------------------------------ */
 
+// context
+export const WorkersContext = React.createContext();
+/* ------------------------------------------ */
+
 const App = () => {
+  // hooks
+  // - useState
+  const [workers, setWorkers] = useState([]);
+
+  // - useEffect
+  useEffect(() => {
+    getWorkers()
+  }, [])
+
+  // functions
+  const getWorkers = async () => {
+    const response = await fetch(`http://localhost:8080/workers`)
+    const data = await response.json();
+    console.log(data)
+    setWorkers(data)
+  };
+
   return (
-    <div>
+    <WorkersContext.Provider value={{ workers }}>
       <WorkerForm />
-    </div>
+    </WorkersContext.Provider>
   )
 }
 
