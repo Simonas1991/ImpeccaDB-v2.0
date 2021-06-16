@@ -2,6 +2,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import axios from 'axios';
 /* ------------------------------------------ */
 
 // material-ui components
@@ -47,9 +48,15 @@ const initialValues = {
 }
 /* ------------------------------------------ */
 
-// formik initial values
-const onSubmit = (values) => {
+// formik onSubmit
+const onSubmit = async ( values) => {
     console.log('Form data: ', values)
+    try {
+        await axios.post('http://localhost:8080/workers/', values)
+    }
+    catch (err) {
+        console.log(err)
+    }
 }
 /* ------------------------------------------ */
 

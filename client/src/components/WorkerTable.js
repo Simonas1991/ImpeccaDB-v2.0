@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 });
 /* ------------------------------------------ */
 
+// creating columns (table header)
 const columns = [
     { id: 'name', label: 'Vardas' },
     { id: 'surname', label: 'Pavardė' },
@@ -26,8 +27,8 @@ const columns = [
     { id: 'number', label: 'Tel. nr.' },
     { id: 'email', label: 'El. paštas' },
     { id: 'address', label: 'Adresas' },
-
 ];
+/* ------------------------------------------ */
 
 const WorkerTable = () => {
     // hooks
