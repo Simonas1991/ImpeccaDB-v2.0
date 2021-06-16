@@ -3,6 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 require('dotenv').config({ path: 'server/.env' });
 const mongoose = require('mongoose');
+const workersRouter = require('./routes/workers');
 
 const server = express();
 const { SERVER_PORT, SERVER_URL } = process.env;
@@ -11,6 +12,9 @@ const { SERVER_PORT, SERVER_URL } = process.env;
 server.use(cors());
 server.use(morgan('tiny'));
 server.use(express.json());
+
+// Additional routes
+server.use('/workers', workersRouter)
 
 // Main route
 server.get('/', (req, res) => {
