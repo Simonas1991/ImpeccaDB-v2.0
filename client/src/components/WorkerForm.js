@@ -1,5 +1,6 @@
 // libs
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { WorkersContext } from '../App';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -48,17 +49,7 @@ const initialValues = {
 }
 /* ------------------------------------------ */
 
-// formik onSubmit
-const onSubmit = async ( values) => {
-    console.log('Form data: ', values)
-    try {
-        await axios.post('http://localhost:8080/workers/', values)
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
-/* ------------------------------------------ */
+
 
 // Yup validation
 const validationSchema = Yup.object({
@@ -67,7 +58,44 @@ const validationSchema = Yup.object({
 })
 /* ------------------------------------------ */
 
-function App() {
+function WorkerForm() {
+    // hooks
+    // - useContext
+    const workersContext = useContext(WorkersContext);
+    let {
+        workers,
+        isUpdating,
+        setIsUpdating,
+        updatingId,
+        setUpdatingId
+    } = workersContext;
+    /* ------------------------------------------ */
+
+    // formik onSubmit
+    const onSubmit = async (values) => {
+        console.log(isUpdating)
+        console.log(updatingId)
+        if (isUpdating) {
+            try {
+                console.log('Form data: ', values)
+                await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
+                setIsUpdating(false)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        } else {
+            console.log('Form data: ', values)
+            try {
+                await axios.post('http://localhost:8080/workers/', values)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+    }
+    /* ------------------------------------------ */
+
     // useFormik
     const formik = useFormik({
         initialValues,
@@ -187,7 +215,7 @@ function App() {
 
                     <Grid item xs={12} sm={3}>
                         <Button className={classes.button} variant="contained" color="primary" type='submit'>
-                            <Typography>Pridėti</Typography>
+                            <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
                         </Button>
                     </Grid>
 
@@ -197,4 +225,4 @@ function App() {
     );
 }
 
-export default App;
+export default WorkerForm;

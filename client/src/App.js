@@ -19,6 +19,9 @@ const App = () => {
   // hooks
   // - useState
   const [workers, setWorkers] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [updatingId, setUpdatingId] = useState('');
+  const [deleteClick, setDeleteClick] = useState(false);
 
   // - useEffect
   useEffect(() => {
@@ -27,14 +30,19 @@ const App = () => {
 
   // functions
   const getWorkers = async () => {
-    const response = await fetch(`http://localhost:8080/workers`)
-    const data = await response.json();
-    console.log(data)
-    setWorkers(data)
+    try {
+      const response = await fetch(`http://localhost:8080/workers`)
+      const data = await response.json();
+      console.log(data)
+      setWorkers(data)
+    }
+    catch (err) {
+      console.log(err)
+    }
   };
 
   return (
-    <WorkersContext.Provider value={{ workers }}>
+    <WorkersContext.Provider value={{ workers, isUpdating, setIsUpdating, updatingId, setUpdatingId }}>
       <WorkerTable />
       <WorkerForm />
     </WorkersContext.Provider>

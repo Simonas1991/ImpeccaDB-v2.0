@@ -1,10 +1,10 @@
 // libs
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
 // material-ui components
-import { Checkbox, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Checkbox , makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // material-ui makeStyles
@@ -32,19 +32,30 @@ const columns = [
 
 const WorkerTable = () => {
     // hooks
+    // - useState
+    const [checkBox, setcheckBox] = useState(false)
+
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
-        workers
+        workers,
+        isUpdating,
+        setIsUpdating,
+        setUpdatingId
     } = workersContext;
     /* ------------------------------------------ */
 
-    // useStyles
-    const classes = useStyles();
+    // functions
+    const handleSelect = (e) => {
+        setUpdatingId(e.target.value)
+        setcheckBox(!checkBox)
+        setIsUpdating(!isUpdating)
+    }
     /* ------------------------------------------ */
 
-    // table rows
-    const rows = workers
+
+    // useStyles
+    const classes = useStyles();
     /* ------------------------------------------ */
 
     return (
@@ -65,18 +76,18 @@ const WorkerTable = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => {
+                        {workers.map((worker) => {
                             return (
-                                <TableRow hover tabIndex={-1} key={row._id} >
+                                <TableRow hover tabIndex={-1} key={worker._id} >
                                     {columns.map((column) => {
-                                        const value = row[column.id];
+                                        const value = worker[column.id];
                                         return (
                                             <TableCell key={column.id} align={column.align}>
                                                 {value}
                                             </TableCell>
                                         );
                                     })}
-                                    <Checkbox component='td' style={{padding: '16px 0'}} key={row._id} />
+                                    <Checkbox disabled={checkBox} onClick={(e) => handleSelect(e)} component='td' style={{ padding: '16px 0' }} value={worker._id} />
                                 </TableRow>
                             );
                         })}
