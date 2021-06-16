@@ -1,11 +1,21 @@
-import './App.css';
+// libs
+import React from 'react'
+/* ------------------------------------------ */
 
-function App() {
+// components
+import WorkerForm from './components/WorkerForm'
+/* ------------------------------------------ */
+
+// css
+import './App.css';
+/* ------------------------------------------ */
+
+const App = () => {
   return (
-    <div className="App">
-     
+    <div>
+      <WorkerForm />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
