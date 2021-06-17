@@ -1,13 +1,16 @@
 // libs
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import { Formik, Form, ErrorMessage } from 'formik';
 import { WorkersContext } from '../App';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import axios from 'axios';
-/* ------------------------------------------ */
+import * as Yup from 'yup';
 
 // material-ui components
-import { Container, makeStyles, Grid, Button, TextField, MenuItem, Box, Typography } from '@material-ui/core';
+import { Container, makeStyles, Grid, TextField, Button, Typography, MenuItem } from '@material-ui/core';
+/* ------------------------------------------ */
+
+// custom components
+import TextError from './TextError'
 /* ------------------------------------------ */
 
 // material-ui makeStyles
@@ -42,32 +45,31 @@ const initialValues = {
     name: '',
     surname: '',
     personalCode: '',
+    email: '',
     address: '',
     number: '',
-    email: '',
-    type: ''
+    type: 'nostatus'
 }
 /* ------------------------------------------ */
 
-
-
 // Yup validation
 const validationSchema = Yup.object({
-    name: Yup.string().required('Įveskite vardą!'),
-    surname: Yup.string().required('Įveskite pavardę!'),
+    name: Yup.string().required('Required'),
+    email: Yup.string().email('Invalid email format'),
+    surname: Yup.string().required('Required')
 })
 /* ------------------------------------------ */
 
-function WorkerForm() {
+const WorkerForm = () => {
     // hooks
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
-        workers,
         isUpdating,
         setIsUpdating,
         updatingId,
-        setUpdatingId
+        setCheckBox,
+        initialValues
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -80,6 +82,7 @@ function WorkerForm() {
                 console.log('Form data: ', values)
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
                 setIsUpdating(false)
+                setCheckBox(false)
             }
             catch (err) {
                 console.log(err)
@@ -96,133 +99,135 @@ function WorkerForm() {
     }
     /* ------------------------------------------ */
 
-    // useFormik
-    const formik = useFormik({
-        initialValues,
-        onSubmit,
-        validationSchema
-    });
-    /* ------------------------------------------ */
-
     const classes = useStyles();
-
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <Container maxWidth="md" className={classes.root}>
-                <Grid container spacing={3}>
+        <Container maxWidth="md" className={classes.root}>
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                {props => (
+                    <Form>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='name'
+                                    name='name'
+                                    label="name"
+                                    variant="outlined"
+                                    value={props.values.name}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                />
+                                <ErrorMessage name='name' component={TextError} />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='surname'
+                                    name='surname'
+                                    label="surname"
+                                    variant="outlined"
+                                    value={props.values.surname}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                />
+                                <ErrorMessage name='surname' component={TextError} />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='address'
+                                    name='address'
+                                    label="address"
+                                    variant="outlined"
+                                    value={props.values.address}
+                                    onChange={props.handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='personalCode'
+                                    name='personalCode'
+                                    label="personalCode"
+                                    variant="outlined"
+                                    value={props.values.personalCode}
+                                    onChange={props.handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='email'
+                                    name='email'
+                                    label="email"
+                                    variant="outlined"
+                                    value={props.values.email}
+                                    onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
+                                />
+                                <ErrorMessage name='email' component={TextError} />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='number'
+                                    name='number'
+                                    label="number"
+                                    variant="outlined"
+                                    value={props.values.number}
+                                    onChange={props.handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="type"
+                                    name='type'
+                                    select
+                                    className={classes.select}
+                                    value={props.values.type}
+                                    onChange={props.handleChange}
+                                    label="Pasirinkite statusą"
+                                >
+                                    <MenuItem name='nostaus' value='nostatus'>
+                                        <Typography>Be statuso</Typography>
+                                    </MenuItem>
+                                    <MenuItem name='work' value='work'>
+                                        <Typography>Komandiruotė</Typography>
+                                    </MenuItem>
+                                    <MenuItem name='holiday' value='holiday'>
+                                        <Typography>Neapmokamos atostogos</Typography>
+                                    </MenuItem>
+                                </TextField>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="name"
-                            label="Vardas"
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.name}
-                        />
-                        {formik.errors.name && formik.touched.name ? <Box className={classes.error}>{formik.errors.name}</Box> : null}
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <Button component='span' className={classes.button} variant="contained" color="secondary">
+                                    <Typography>Atšaukti</Typography>
+                                </Button>
+                            </Grid>
 
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="surname"
-                            label="Pavardė"
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.surname}
-                        />
-                        {formik.errors.surname && formik.touched.surname ? <Box className={classes.error}>{formik.errors.surname}</Box> : null}
-                    </Grid>
+                            <Grid item xs={12} sm={3}>
+                                <Button className={classes.button} variant="contained" color="primary" type='submit'>
+                                    <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Form>
+                )}
 
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="personalCode"
-                            label="Asmens kodas"
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.personalCode}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="address"
-                            label="Adresas"
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.address}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="number"
-                            label="Tel. nr."
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.number}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            className={classes.textField}
-                            id="email"
-                            label="El. paštas"
-                            variant="outlined"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.email}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            id="type"
-                            name='type'
-                            select
-                            className={classes.select}
-                            value={formik.values.type}
-                            onChange={formik.handleChange}
-                            label="Pasirinkite statusą"
-                        >
-                            <MenuItem name='nostaus' value='nostatus'>
-                                <Typography>Be statuso</Typography>
-                            </MenuItem>
-                            <MenuItem name='work' value='work'>
-                                <Typography>Komandiruotė</Typography>
-                            </MenuItem>
-                            <MenuItem name='holiday' value='holiday'>
-                                <Typography>Neapmokamos atostogos</Typography>
-                            </MenuItem>
-                        </TextField>
-                    </Grid>
-
-                    <Grid item xs={12} sm={3}>
-                        <Button className={classes.button} variant="contained" color="secondary">
-                            <Typography>Atšaukti</Typography>
-                        </Button>
-                    </Grid>
-
-                    <Grid item xs={12} sm={3}>
-                        <Button className={classes.button} variant="contained" color="primary" type='submit'>
-                            <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
-                        </Button>
-                    </Grid>
-
-                </Grid>
-            </Container>
-        </form>
-    );
+            </Formik>
+        </Container>
+    )
 }
 
 export default WorkerForm;

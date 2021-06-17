@@ -1,10 +1,10 @@
 // libs
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
 // material-ui components
-import { Checkbox , makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Checkbox, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // material-ui makeStyles
@@ -32,27 +32,29 @@ const columns = [
 
 const WorkerTable = () => {
     // hooks
-    // - useState
-    const [checkBox, setcheckBox] = useState(false)
-
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
         workers,
         isUpdating,
         setIsUpdating,
-        setUpdatingId
+        setUpdatingId,
+        checkBox,
+        setCheckBox,
+       
     } = workersContext;
     /* ------------------------------------------ */
 
     // functions
-    const handleSelect = (e) => {
+    const handleSelect = (e, worker) => {
+        console.log(worker)
+        console.log(e.target.inputProps)
+        // setInitialValues(worker)
         setUpdatingId(e.target.value)
-        setcheckBox(!checkBox)
+        setCheckBox(!checkBox)
         setIsUpdating(!isUpdating)
     }
     /* ------------------------------------------ */
-
 
     // useStyles
     const classes = useStyles();
@@ -87,7 +89,13 @@ const WorkerTable = () => {
                                             </TableCell>
                                         );
                                     })}
-                                    <Checkbox disabled={checkBox} onClick={(e) => handleSelect(e)} component='td' style={{ padding: '16px 0' }} value={worker._id} />
+                                    <Checkbox
+                                        disabled={checkBox}
+                                        onChange={(e, worker) => handleSelect(e, worker)}
+                                        component='td'
+                                        style={{ padding: '16px 0' }}
+                                        value={worker._id}
+                                    />
                                 </TableRow>
                             );
                         })}
