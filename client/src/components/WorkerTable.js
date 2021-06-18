@@ -4,33 +4,26 @@ import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
 // material-ui components
-import { Checkbox, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 /* ------------------------------------------ */
+
+// bootstrap
+import Table from 'react-bootstrap/Table';
+/* ------------------------------------------ */
+
 
 // material-ui makeStyles
-const useStyles = makeStyles({
-    root: {
-        width: '80%',
-        margin: '100px auto'
-    },
-    container: {
-        maxHeight: 440,
-    },
-});
+const useStyles = makeStyles((theme) => ({
+    button: {
+        backgroundColor: '#E8EAE3',
+        borderRadius: '8px',
+    }
+
+}));
 /* ------------------------------------------ */
 
-// creating columns (table header)
-const columns = [
-    { id: 'name', label: 'Vardas' },
-    { id: 'surname', label: 'Pavardė' },
-    { id: 'personalCode', label: 'Asmens kodas' },
-    { id: 'number', label: 'Tel. nr.' },
-    { id: 'email', label: 'El. paštas' },
-    { id: 'address', label: 'Adresas' },
-];
-/* ------------------------------------------ */
 
-const WorkerTable = () => {
+function WorkerTable() {
     // hooks
     // - useContext
     const workersContext = useContext(WorkersContext);
@@ -38,72 +31,70 @@ const WorkerTable = () => {
         workers,
         isUpdating,
         setIsUpdating,
+        setFormValues,
         setUpdatingId,
         checkBox,
         setCheckBox,
-       
     } = workersContext;
     /* ------------------------------------------ */
 
     // functions
-    const handleSelect = (e, worker) => {
-        console.log(worker)
-        console.log(e.target.inputProps)
-        // setInitialValues(worker)
-        setUpdatingId(e.target.value)
+    const handleUpdate = (worker) => {
+        setFormValues({
+            name: worker.name,
+            surname: worker.surname,
+            personalCode: worker.personalCode,
+            address: worker.address,
+            number: worker.number,
+            email: worker.email,
+            type: worker.type
+        })
+        
+        setUpdatingId(worker._id)
         setCheckBox(!checkBox)
         setIsUpdating(!isUpdating)
     }
     /* ------------------------------------------ */
 
-    // useStyles
     const classes = useStyles();
-    /* ------------------------------------------ */
 
     return (
-        <Paper className={classes.root}>
-            <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {workers.map((worker) => {
-                            return (
-                                <TableRow hover tabIndex={-1} key={worker._id} >
-                                    {columns.map((column) => {
-                                        const value = worker[column.id];
-                                        return (
-                                            <TableCell key={column.id} align={column.align}>
-                                                {value}
-                                            </TableCell>
-                                        );
-                                    })}
-                                    <Checkbox
-                                        disabled={checkBox}
-                                        onChange={(e, worker) => handleSelect(e, worker)}
-                                        component='td'
-                                        style={{ padding: '16px 0' }}
-                                        value={worker._id}
-                                    />
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Paper>
-    )
+        <Table striped bordered hover size="md" style={{ margin: '100px auto', width: '75vw' }}>
+            <thead className="thead-dark">
+                <tr>
+                    <th>Vardas</th>
+                    <th>Pavardė</th>
+                    <th>Asmens kodas</th>
+                    <th>Adresas</th>
+                    <th>Tel. nr.</th>
+                    <th>El. paštas</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {workers.map(worker => (
+                    <tr key={worker._id}>
+                        <td>{worker.name}</td>
+                        <td>{worker.surname}</td>
+                        <td>{worker.personalCode}</td>
+                        <td>{worker.address}</td>
+                        <td>{worker.number}</td>
+                        <td>{worker.email}</td>
+                        <td>
+                            <Button
+                                component='span'
+                                className={classes.button}
+                                variant="outlined"
+                                color="primary"
+                                onClick={() => handleUpdate(worker)}>
+                                Keisti
+                            </Button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </Table>
+    );
 }
 
-export default WorkerTable
+export default WorkerTable;

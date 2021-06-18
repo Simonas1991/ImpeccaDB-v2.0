@@ -40,18 +40,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 /* ------------------------------------------ */
 
-// formik initial values
-const initialValues = {
-    name: '',
-    surname: '',
-    personalCode: '',
-    email: '',
-    address: '',
-    number: '',
-    type: 'nostatus'
-}
-/* ------------------------------------------ */
-
 // Yup validation
 const validationSchema = Yup.object({
     name: Yup.string().required('Required'),
@@ -69,7 +57,8 @@ const WorkerForm = () => {
         setIsUpdating,
         updatingId,
         setCheckBox,
-        initialValues
+        initialValues,
+        formValues
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -103,9 +92,10 @@ const WorkerForm = () => {
     return (
         <Container maxWidth="md" className={classes.root}>
             <Formik
-                initialValues={initialValues}
+                initialValues={formValues || initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
+                enableReinitialize
             >
                 {props => (
                     <Form>
@@ -217,7 +207,7 @@ const WorkerForm = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={3}>
-                                <Button className={classes.button} variant="contained" color="primary" type='submit'>
+                                <Button component='span' className={classes.button} variant="contained" color="primary" type='submit'>
                                     <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
                                 </Button>
                             </Grid>

@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react'
 
 // components
 import WorkerForm from './components/WorkerForm'
-import WorkerTable from './components/WorkerTable';
-import WorkerTableSimple from './components/WorkerTableSimple'
+import WorkerTable from './components/WorkerTable'
 /* ------------------------------------------ */
 
 // css
@@ -22,10 +21,13 @@ const App = () => {
   const [workers, setWorkers] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingId, setUpdatingId] = useState('');
-  const [deleteClick, setDeleteClick] = useState(false);
   const [updateClick, setUpdateClick] = useState(false);
   const [checkBox, setCheckBox] = useState(false)
-  const [initialValues, setInitialValues] = useState({
+  const [formValues, setFormValues] = useState(null)
+  /* ------------------------------------------ */
+
+  // formik values  
+  const initialValues = {
     name: '',
     surname: '',
     personalCode: '',
@@ -33,12 +35,14 @@ const App = () => {
     number: '',
     email: '',
     type: 'nostatus'
-  })
+  }
+  /* ------------------------------------------ */
 
   // - useEffect
   useEffect(() => {
     getWorkers()
   }, [])
+  /* ------------------------------------------ */
 
   // functions
   const getWorkers = async () => {
@@ -52,6 +56,7 @@ const App = () => {
       console.log(err)
     }
   };
+  /* ------------------------------------------ */
 
   return (
     <WorkersContext.Provider value={{
@@ -65,10 +70,10 @@ const App = () => {
       updateClick,
       setUpdateClick,
       initialValues,
-      setInitialValues
+      formValues,
+      setFormValues
     }}>
-      {/* <WorkerTable /> */}
-      <WorkerTableSimple />
+      <WorkerTable />
       <WorkerForm />
     </WorkersContext.Provider>
   )
