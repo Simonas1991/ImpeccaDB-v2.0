@@ -21,13 +21,8 @@ const App = () => {
   const [workers, setWorkers] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [updatingId, setUpdatingId] = useState('');
-  const [updateClick, setUpdateClick] = useState(false);
-  const [checkBox, setCheckBox] = useState(false)
   const [formValues, setFormValues] = useState(null)
-  /* ------------------------------------------ */
-
-  // formik values  
-  const initialValues = {
+  const [initialValues, setInitialValues] = useState({
     name: '',
     surname: '',
     personalCode: '',
@@ -35,7 +30,7 @@ const App = () => {
     number: '',
     email: '',
     type: 'nostatus'
-  }
+  })
   /* ------------------------------------------ */
 
   // - useEffect
@@ -65,13 +60,10 @@ const App = () => {
       setIsUpdating,
       updatingId,
       setUpdatingId,
-      checkBox,
-      setCheckBox,
-      updateClick,
-      setUpdateClick,
       initialValues,
       formValues,
-      setFormValues
+      setFormValues,
+      setInitialValues
     }}>
       <WorkerTable />
       <WorkerForm />

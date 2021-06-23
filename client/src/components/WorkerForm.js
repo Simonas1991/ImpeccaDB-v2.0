@@ -62,14 +62,14 @@ const WorkerForm = () => {
         setIsUpdating,
         updatingId,
         initialValues,
+        setInitialValues,
         formValues
     } = workersContext;
     /* ------------------------------------------ */
 
     // formik onSubmit
     const onSubmit = async (values) => {
-        console.log(isUpdating)
-        console.log(updatingId)
+        console.log(values)
         if (isUpdating) {
             try {
                 console.log('Form data: ', values)
@@ -80,7 +80,6 @@ const WorkerForm = () => {
                 console.log(err)
             }
         } else {
-            console.log('Form data: ', values)
             try {
                 await axios.post('http://localhost:8080/workers/', values)
             }
@@ -100,6 +99,11 @@ const WorkerForm = () => {
         catch (err) {
             console.log(err)
         }
+    }
+
+    const cancelUpdate = () => {
+        setIsUpdating(false)
+        setInitialValues(initialValues)
     }
     /* ------------------------------------------ */
 
@@ -217,7 +221,7 @@ const WorkerForm = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={3}>
-                                <Button className={classes.button} variant="contained" color="secondary">
+                                <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>
                                     <Typography>Atšaukti</Typography>
                                 </Button>
                             </Grid>
