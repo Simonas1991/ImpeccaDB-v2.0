@@ -14,7 +14,7 @@ import TextError from './TextError'
 /* ------------------------------------------ */
 
 // material-ui makeStyles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         margin: '100px auto',
         padding: '5%',
@@ -23,14 +23,14 @@ const useStyles = makeStyles((theme) => ({
     },
     textField: {
         width: '100%',
-        backgroundColor: '#F7F7F7',
+        backgroundColor: '#FFF',
         borderRadius: '4px'
     },
     button: {
         width: '100%',
         borderRadius: '10px'
     },
-    btnDelete: {
+    btnDelCan: {
         width: '25%',
         borderRadius: '10px',
         margin: '20px auto',
@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme) => ({
 
 // Yup validation
 const validationSchema = Yup.object({
-    name: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid email format'),
-    surname: Yup.string().required('Required')
+    name: Yup.string().required('Įveskite vardą'),
+    surname: Yup.string().required('Įveskite pavardę'),
+    email: Yup.string().email('Neteisingas el. pašto formatas')
 })
 /* ------------------------------------------ */
 
@@ -63,16 +63,16 @@ const WorkerForm = () => {
         updatingId,
         initialValues,
         setInitialValues,
-        formValues
+        formValues,
+        postClick,
+        setPostClick
     } = workersContext;
     /* ------------------------------------------ */
 
     // formik onSubmit
     const onSubmit = async (values) => {
-        console.log(values)
         if (isUpdating) {
             try {
-                console.log('Form data: ', values)
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
                 setIsUpdating(false)
             }
@@ -82,6 +82,7 @@ const WorkerForm = () => {
         } else {
             try {
                 await axios.post('http://localhost:8080/workers/', values)
+                setPostClick(!postClick)
             }
             catch (err) {
                 console.log(err)
@@ -104,6 +105,7 @@ const WorkerForm = () => {
     const cancelUpdate = () => {
         setIsUpdating(false)
         setInitialValues(initialValues)
+        console.log()
     }
     /* ------------------------------------------ */
 
@@ -126,7 +128,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='name'
                                     name='name'
-                                    label="name"
+                                    label="Vardas"
                                     variant="outlined"
                                     value={props.values.name}
                                     onChange={props.handleChange}
@@ -140,7 +142,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='surname'
                                     name='surname'
-                                    label="surname"
+                                    label="Pavardė"
                                     variant="outlined"
                                     value={props.values.surname}
                                     onChange={props.handleChange}
@@ -154,7 +156,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='address'
                                     name='address'
-                                    label="address"
+                                    label="Adresas"
                                     variant="outlined"
                                     value={props.values.address}
                                     onChange={props.handleChange}
@@ -166,7 +168,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='personalCode'
                                     name='personalCode'
-                                    label="personalCode"
+                                    label="Asmens kodas"
                                     variant="outlined"
                                     value={props.values.personalCode}
                                     onChange={props.handleChange}
@@ -178,7 +180,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='email'
                                     name='email'
-                                    label="email"
+                                    label="El. paštas"
                                     variant="outlined"
                                     value={props.values.email}
                                     onChange={props.handleChange}
@@ -192,7 +194,7 @@ const WorkerForm = () => {
                                     type="text"
                                     id='number'
                                     name='number'
-                                    label="number"
+                                    label="Tel. nr."
                                     variant="outlined"
                                     value={props.values.number}
                                     onChange={props.handleChange}
@@ -219,22 +221,22 @@ const WorkerForm = () => {
                                     </MenuItem>
                                 </TextField>
                             </Grid>
-
                             <Grid item xs={12} sm={3}>
-                                <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>
-                                    <Typography>Atšaukti</Typography>
-                                </Button>
                             </Grid>
-
                             <Grid item xs={12} sm={3}>
                                 <Button className={classes.button} variant="contained" color="primary" type='submit'>
                                     <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
                                 </Button>
                             </Grid>
                             {isUpdating ?
-                                <Button className={classes.btnDelete} variant="contained" color="secondary" onClick={deleteWorker}>
-                                    <Typography>Ištrinti</Typography>
-                                </Button>
+                                <>
+                                    <Button className={classes.btnDelCan} variant="contained" color="secondary" onClick={cancelUpdate}>
+                                        <Typography>Atšaukti</Typography>
+                                    </Button>
+                                    <Button className={classes.btnDelCan} variant="contained" color="secondary" onClick={deleteWorker}>
+                                        <Typography>Ištrinti</Typography>
+                                    </Button>
+                                </>
                                 :
                                 null
                             }

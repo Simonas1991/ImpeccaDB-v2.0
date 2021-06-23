@@ -12,10 +12,13 @@ import Table from 'react-bootstrap/Table';
 /* ------------------------------------------ */
 
 // material-ui makeStyles
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     button: {
-        backgroundColor: '#E8EAE3',
+        backgroundColor: '#fff',
         borderRadius: '8px',
+    },
+    header: {
+        backgroundColor: '#E8EAE3'
     }
 }));
 /* ------------------------------------------ */
@@ -52,8 +55,8 @@ function WorkerTable() {
     const classes = useStyles();
 
     return (
-        <Table striped bordered hover size="md" style={{ margin: '100px auto', width: '75vw' }}>
-            <thead className="thead-dark">
+        <Table bordered hover size="md" style={{ margin: '100px auto', width: '75vw' }}>
+            <thead className={classes.header}>
                 <tr>
                     <th>Vardas</th>
                     <th>Pavardė</th>

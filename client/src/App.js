@@ -20,6 +20,7 @@ const App = () => {
   // - useState
   const [workers, setWorkers] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [postClick, setPostClick] = useState(false);
   const [updatingId, setUpdatingId] = useState('');
   const [formValues, setFormValues] = useState(null)
   const [initialValues, setInitialValues] = useState({
@@ -36,7 +37,7 @@ const App = () => {
   // - useEffect
   useEffect(() => {
     getWorkers()
-  }, [isUpdating])
+  }, [isUpdating, postClick])
   /* ------------------------------------------ */
 
   // functions
@@ -63,7 +64,9 @@ const App = () => {
       initialValues,
       formValues,
       setFormValues,
-      setInitialValues
+      setInitialValues,
+      postClick,
+      setPostClick
     }}>
       <WorkerTable />
       <WorkerForm />
