@@ -41,7 +41,7 @@ const App = () => {
   // - useEffect
   useEffect(() => {
     getWorkers()
-  }, [])
+  }, [isUpdating])
   /* ------------------------------------------ */
 
   // functions

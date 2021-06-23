@@ -11,17 +11,14 @@ import { Button, makeStyles } from '@material-ui/core';
 import Table from 'react-bootstrap/Table';
 /* ------------------------------------------ */
 
-
 // material-ui makeStyles
 const useStyles = makeStyles((theme) => ({
     button: {
         backgroundColor: '#E8EAE3',
         borderRadius: '8px',
     }
-
 }));
 /* ------------------------------------------ */
-
 
 function WorkerTable() {
     // hooks
@@ -33,8 +30,6 @@ function WorkerTable() {
         setIsUpdating,
         setFormValues,
         setUpdatingId,
-        checkBox,
-        setCheckBox,
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -49,10 +44,8 @@ function WorkerTable() {
             email: worker.email,
             type: worker.type
         })
-        
-        setUpdatingId(worker._id)
-        setCheckBox(!checkBox)
         setIsUpdating(!isUpdating)
+        setUpdatingId(worker._id)
     }
     /* ------------------------------------------ */
 

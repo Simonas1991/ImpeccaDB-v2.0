@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         borderRadius: '10px'
     },
+    btnDelete: {
+        width: '25%',
+        borderRadius: '10px',
+        margin: '20px auto',
+    },
     select: {
         width: '100%',
         backgroundColor: '#F7F7F7'
@@ -56,7 +61,6 @@ const WorkerForm = () => {
         isUpdating,
         setIsUpdating,
         updatingId,
-        setCheckBox,
         initialValues,
         formValues
     } = workersContext;
@@ -71,7 +75,6 @@ const WorkerForm = () => {
                 console.log('Form data: ', values)
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
                 setIsUpdating(false)
-                setCheckBox(false)
             }
             catch (err) {
                 console.log(err)
@@ -88,11 +91,24 @@ const WorkerForm = () => {
     }
     /* ------------------------------------------ */
 
+    // functions
+    const deleteWorker = async () => {
+        try {
+            await axios.delete(`http://localhost:8080/workers/${updatingId}`)
+            setIsUpdating(false)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+    /* ------------------------------------------ */
+
+
     const classes = useStyles();
     return (
         <Container maxWidth="md" className={classes.root}>
             <Formik
-                initialValues={formValues || initialValues}
+                initialValues={isUpdating ? formValues : initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
                 enableReinitialize
@@ -201,16 +217,23 @@ const WorkerForm = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={3}>
-                                <Button component='span' className={classes.button} variant="contained" color="secondary">
+                                <Button className={classes.button} variant="contained" color="secondary">
                                     <Typography>Atšaukti</Typography>
                                 </Button>
                             </Grid>
 
                             <Grid item xs={12} sm={3}>
-                                <Button component='span' className={classes.button} variant="contained" color="primary" type='submit'>
+                                <Button className={classes.button} variant="contained" color="primary" type='submit'>
                                     <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
                                 </Button>
                             </Grid>
+                            {isUpdating ?
+                                <Button className={classes.btnDelete} variant="contained" color="secondary" onClick={deleteWorker}>
+                                    <Typography>Ištrinti</Typography>
+                                </Button>
+                                :
+                                null
+                            }
                         </Grid>
                     </Form>
                 )}
