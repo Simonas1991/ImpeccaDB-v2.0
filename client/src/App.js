@@ -1,10 +1,11 @@
 // libs
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 /* ------------------------------------------ */
 
 // components
-import WorkerForm from './components/WorkerForm'
-import WorkerTable from './components/WorkerTable'
+import Workers from './pages/Workers';
+import Navbar from './components/Navbar'
 /* ------------------------------------------ */
 
 // css
@@ -68,8 +69,14 @@ const App = () => {
       postClick,
       setPostClick
     }}>
-      <WorkerTable />
-      <WorkerForm />
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path='/workers'>
+            <Workers />
+          </Route>
+        </Switch>
+      </Router>
     </WorkersContext.Provider>
   )
 }

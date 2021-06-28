@@ -16,8 +16,8 @@ import TextError from './TextError'
 // material-ui makeStyles
 const useStyles = makeStyles(() => ({
     root: {
-        margin: '100px auto',
-        padding: '5%',
+        margin: '50px auto',
+        padding: '2%',
         backgroundColor: '#E8EAE3',
         borderRadius: '8px'
     },
@@ -27,13 +27,9 @@ const useStyles = makeStyles(() => ({
         borderRadius: '4px'
     },
     button: {
-        width: '100%',
+        margin: 'auto',
+        width: '30%',
         borderRadius: '10px'
-    },
-    btnDelCan: {
-        width: '25%',
-        borderRadius: '10px',
-        margin: '20px auto',
     },
     select: {
         width: '100%',
@@ -104,8 +100,6 @@ const WorkerForm = () => {
 
     const cancelUpdate = () => {
         setIsUpdating(false)
-        setInitialValues(initialValues)
-        console.log()
     }
     /* ------------------------------------------ */
 
@@ -221,25 +215,31 @@ const WorkerForm = () => {
                                     </MenuItem>
                                 </TextField>
                             </Grid>
-                            <Grid item xs={12} sm={3}>
-                            </Grid>
-                            <Grid item xs={12} sm={3}>
+                            {isUpdating ?
+                                <>
+                                    <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
+                                        <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>
+                                            <Typography>Atšaukti</Typography>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
+                                        <Button className={classes.button} variant="contained" color="secondary" onClick={deleteWorker}>
+                                            <Typography>Ištrinti</Typography>
+                                        </Button>
+                                    </Grid>
+                                </>
+                                :
+                                <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
+                                    <Button className={classes.button} variant="contained" color="secondary" type='reset'>
+                                        <Typography>Atšaukti</Typography>
+                                    </Button>
+                                </Grid>
+                            }
+                            <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
                                 <Button className={classes.button} variant="contained" color="primary" type='submit'>
                                     <Typography>{isUpdating ? 'Keisti' : 'Pridėti'}</Typography>
                                 </Button>
                             </Grid>
-                            {isUpdating ?
-                                <>
-                                    <Button className={classes.btnDelCan} variant="contained" color="secondary" onClick={cancelUpdate}>
-                                        <Typography>Atšaukti</Typography>
-                                    </Button>
-                                    <Button className={classes.btnDelCan} variant="contained" color="secondary" onClick={deleteWorker}>
-                                        <Typography>Ištrinti</Typography>
-                                    </Button>
-                                </>
-                                :
-                                null
-                            }
                         </Grid>
                     </Form>
                 )}
