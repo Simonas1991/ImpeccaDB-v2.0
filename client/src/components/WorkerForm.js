@@ -29,7 +29,9 @@ const useStyles = makeStyles(() => ({
     button: {
         margin: 'auto',
         width: '30%',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        border: 'none !important',
+        outline: 'none !important'
     },
     select: {
         width: '100%',
@@ -58,7 +60,6 @@ const WorkerForm = () => {
         setIsUpdating,
         updatingId,
         initialValues,
-        setInitialValues,
         formValues,
         postClick,
         setPostClick
@@ -66,7 +67,7 @@ const WorkerForm = () => {
     /* ------------------------------------------ */
 
     // formik onSubmit
-    const onSubmit = async (values) => {
+    const onSubmit = async (values, onSubmitProps) => {
         if (isUpdating) {
             try {
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
@@ -79,6 +80,7 @@ const WorkerForm = () => {
             try {
                 await axios.post('http://localhost:8080/workers/', values)
                 setPostClick(!postClick)
+                onSubmitProps.resetForm()
             }
             catch (err) {
                 console.log(err)
@@ -218,13 +220,13 @@ const WorkerForm = () => {
                             {isUpdating ?
                                 <>
                                     <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
-                                        <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>
-                                            <Typography>Atšaukti</Typography>
+                                        <Button className={classes.button} variant="contained" color="secondary" onClick={deleteWorker}>
+                                            <Typography>Ištrinti</Typography>
                                         </Button>
                                     </Grid>
                                     <Grid item xs={12} sm={12} style={{ display: 'flex' }}>
-                                        <Button className={classes.button} variant="contained" color="secondary" onClick={deleteWorker}>
-                                            <Typography>Ištrinti</Typography>
+                                        <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>
+                                            <Typography>Atšaukti</Typography>
                                         </Button>
                                     </Grid>
                                 </>
