@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/Table';
 /* ------------------------------------------ */
 
 // material-ui components
-import { makeStyles, Typography, Box, Button, Container } from '@material-ui/core';
+import { makeStyles, Typography, Box, Button, Container, Paper } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // material-ui makeStyles
@@ -65,41 +65,43 @@ const HolidayWorkTable = () => {
         return (
             <Container maxWidth='lg'>
                 <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>{tableHeader}</Typography>
-                <Table bordered hover size="sm" className={classes.table} >
-                    <thead className={classes.tableHeader}>
-                        <tr>
-                            <th>Vardas</th>
-                            <th>Pavardė</th>
-                            <th>Asmens kodas</th>
-                            <th>Nuo</th>
-                            <th>Iki</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    {arr.map((worker) => (
-                        <tbody key={worker._id}>
+                <Paper elevation={2}>
+                    <Table bordered hover size="sm" className={classes.table} >
+                        <thead className={classes.tableHeader}>
                             <tr>
-                                <td width='20%'>{worker.name}</td>
-                                <td width='20%'>{worker.surname}</td>
-                                <td width='20%'>{worker.personalCode}</td>
-                                <td width='20%'>{worker.from}</td>
-                                <td width='20%' className={dateChecker(worker.to) ? classes.green : classes.red}>{worker.to}</td>
-                                <td width='20%'>
-                                    <Button
-                                        component='span'
-                                        className={classes.button}
-                                        variant="outlined"
-                                        color="primary"
-                                        onClick={() => handleUpdate(worker)}
-                                    >
-                                        Keisti
-                                    </Button>
-                                </td>
+                                <th>Vardas</th>
+                                <th>Pavardė</th>
+                                <th>Asmens kodas</th>
+                                <th>Nuo</th>
+                                <th>Iki</th>
+                                <th></th>
                             </tr>
-                        </tbody>
+                        </thead>
+                        {arr.map((worker) => (
+                            <tbody key={worker._id}>
+                                <tr>
+                                    <td width='20%'>{worker.name}</td>
+                                    <td width='20%'>{worker.surname}</td>
+                                    <td width='20%'>{worker.personalCode}</td>
+                                    <td width='20%'>{worker.from}</td>
+                                    <td width='20%' className={dateChecker(worker.to) ? classes.green : classes.red}>{worker.to}</td>
+                                    <td width='20%'>
+                                        <Button
+                                            component='span'
+                                            className={classes.button}
+                                            variant="outlined"
+                                            color="primary"
+                                            onClick={() => handleUpdate(worker)}
+                                        >
+                                            Keisti
+                                        </Button>
+                                    </td>
+                                </tr>
+                            </tbody>
 
-                    ))}
-                </Table >
+                        ))}
+                    </Table >
+                </Paper>
             </Container>
         )
     }
@@ -130,25 +132,27 @@ const HolidayWorkTable = () => {
             {mapArr(workArray, 'Komandiruotėse')}
             <Container maxWidth='md'>
                 <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>Be statuso</Typography>
-                <Table bordered hover size="xs" className={classes.table} >
-                    <thead className={classes.tableHeader}>
-                        <tr>
-                            <th>Vardas</th>
-                            <th>Pavardė</th>
-                            <th>Asmens kodas</th>
-                        </tr>
-                    </thead>
-                    {noStatusArray.map((worker) => (
-                        <tbody key={worker._id}>
+                <Paper elevation={2}>
+                    <Table bordered hover size="xs" className={classes.table} >
+                        <thead className={classes.tableHeader}>
                             <tr>
-                                <td width='20%'>{worker.name}</td>
-                                <td width='20%'>{worker.surname}</td>
-                                <td width='20%'>{worker.personalCode}</td>
+                                <th>Vardas</th>
+                                <th>Pavardė</th>
+                                <th>Asmens kodas</th>
                             </tr>
-                        </tbody>
+                        </thead>
+                        {noStatusArray.map((worker) => (
+                            <tbody key={worker._id}>
+                                <tr>
+                                    <td width='20%'>{worker.name}</td>
+                                    <td width='20%'>{worker.surname}</td>
+                                    <td width='20%'>{worker.personalCode}</td>
+                                </tr>
+                            </tbody>
 
-                    ))}
-                </Table >
+                        ))}
+                    </Table >
+                </Paper>
             </Container>
         </Box>
     )
