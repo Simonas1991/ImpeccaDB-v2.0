@@ -31,6 +31,10 @@ const HolidayWorkTable = () => {
     const workersContext = useContext(WorkersContext);
     let {
         workers,
+        setFormValues,
+        setIsUpdating,
+        isUpdating,
+        setUpdatingId
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -70,6 +74,7 @@ const HolidayWorkTable = () => {
                                         className={classes.button}
                                         variant="outlined"
                                         color="primary"
+                                        onClick={() => handleUpdate(worker)}
                                     >
                                         Keisti
                                     </Button>
@@ -82,15 +87,33 @@ const HolidayWorkTable = () => {
             </Container>
         )
     }
+
+    const handleUpdate = (worker) => {
+        setFormValues({
+            name: worker.name,
+            surname: worker.surname,
+            personalCode: worker.personalCode,
+            address: worker.address,
+            number: worker.number,
+            email: worker.email,
+            type: worker.type,
+            from: worker.from,
+            to: worker.to
+        })
+        setIsUpdating(!isUpdating)
+        setUpdatingId(worker._id)
+    }
+    /* ------------------------------------------ */
+
     /* ------------------------------------------ */
 
     const classes = useStyles();
-
+    console.log(workers)
     return (
         <Box className={classes.container}>
-                    {mapArr(holidayArray, 'Atostogose')}
-                    {mapArr(workArray, 'Komandiruotėse')}
-                    {mapArr(noStatusArray, 'Be statuso')}
+            {mapArr(holidayArray, 'Atostogose')}
+            {mapArr(workArray, 'Komandiruotėse')}
+            {mapArr(noStatusArray, 'Be statuso')}
         </Box>
     )
 }

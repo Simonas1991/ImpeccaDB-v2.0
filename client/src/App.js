@@ -32,7 +32,9 @@ const App = () => {
     address: '',
     number: '',
     email: '',
-    type: 'nostatus'
+    type: 'nostatus',
+    from: '',
+    to: ''
   })
   /* ------------------------------------------ */
 

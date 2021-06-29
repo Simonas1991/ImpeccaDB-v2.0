@@ -45,7 +45,7 @@ function WorkerTable() {
             address: worker.address,
             number: worker.number,
             email: worker.email,
-            type: worker.type
+            type: worker.type,
         })
         setIsUpdating(!isUpdating)
         setUpdatingId(worker._id)

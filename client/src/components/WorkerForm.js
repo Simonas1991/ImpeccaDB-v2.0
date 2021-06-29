@@ -106,8 +106,8 @@ const WorkerForm = () => {
     }
     /* ------------------------------------------ */
 
-
     const classes = useStyles();
+
     return (
         <Container maxWidth="md" className={classes.root}>
             <Formik
