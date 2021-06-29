@@ -61,6 +61,8 @@ const HolidayWorkForm = () => {
         updatingId,
         initialValues,
         formValues,
+        isActive,
+        setIsActive
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -78,6 +80,7 @@ const HolidayWorkForm = () => {
 
     // functions
     const cancelUpdate = () => {
+        setIsActive(false)
         setIsUpdating(false)
     }
     /* ------------------------------------------ */

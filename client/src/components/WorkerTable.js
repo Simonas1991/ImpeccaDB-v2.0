@@ -1,5 +1,5 @@
 // libs
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
@@ -15,9 +15,12 @@ import Table from 'react-bootstrap/Table';
 const useStyles = makeStyles(() => ({
     button: {
         backgroundColor: '#fff',
-        borderRadius: '8px',
+        borderRadius: '8px'
     },
     header: {
+        backgroundColor: '#E8EAE3'
+    },
+    active: {
         backgroundColor: '#E8EAE3'
     }
 }));
@@ -25,6 +28,9 @@ const useStyles = makeStyles(() => ({
 
 function WorkerTable() {
     // hooks
+    // - useState
+
+
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
@@ -33,6 +39,9 @@ function WorkerTable() {
         setIsUpdating,
         setFormValues,
         setUpdatingId,
+        updatingId,
+        isActive,
+        setIsActive
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -49,6 +58,7 @@ function WorkerTable() {
         })
         setIsUpdating(!isUpdating)
         setUpdatingId(worker._id)
+        setIsActive(!isActive)
     }
     /* ------------------------------------------ */
 
@@ -69,7 +79,7 @@ function WorkerTable() {
             </thead>
             <tbody>
                 {workers.map(worker => (
-                    <tr key={worker._id}>
+                    <tr key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
                         <td>{worker.name}</td>
                         <td>{worker.surname}</td>
                         <td>{worker.personalCode}</td>

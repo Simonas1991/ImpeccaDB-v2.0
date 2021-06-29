@@ -30,6 +30,9 @@ const useStyles = makeStyles(() => ({
     },
     red: {
         backgroundColor: '#d70024'
+    },
+    active: {
+        backgroundColor: '#E8EAE3'
     }
 }));
 /* ------------------------------------------ */
@@ -43,7 +46,10 @@ const HolidayWorkTable = () => {
         setFormValues,
         setIsUpdating,
         isUpdating,
-        setUpdatingId
+        setUpdatingId,
+        updatingId,
+        isActive,
+        setIsActive
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -79,7 +85,7 @@ const HolidayWorkTable = () => {
                         </thead>
                         {arr.map((worker) => (
                             <tbody key={worker._id}>
-                                <tr>
+                                <tr className={updatingId === worker._id && isActive ? classes.active : null}>
                                     <td width='20%'>{worker.name}</td>
                                     <td width='20%'>{worker.surname}</td>
                                     <td width='20%'>{worker.personalCode}</td>
@@ -106,7 +112,6 @@ const HolidayWorkTable = () => {
         )
     }
 
-
     const handleUpdate = (worker) => {
         setFormValues({
             name: worker.name,
@@ -121,11 +126,11 @@ const HolidayWorkTable = () => {
         })
         setIsUpdating(!isUpdating)
         setUpdatingId(worker._id)
+        setIsActive(!isActive)
     }
     /* ------------------------------------------ */
 
     const classes = useStyles();
-    console.log(workers)
     return (
         <Box className={classes.container}>
             {mapArr(holidayArray, 'Atostogose')}
@@ -149,7 +154,6 @@ const HolidayWorkTable = () => {
                                     <td width='20%'>{worker.personalCode}</td>
                                 </tr>
                             </tbody>
-
                         ))}
                     </Table >
                 </Paper>

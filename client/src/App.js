@@ -27,7 +27,8 @@ const App = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [postClick, setPostClick] = useState(false);
   const [updatingId, setUpdatingId] = useState('');
-  const [formValues, setFormValues] = useState(null)
+  const [isActive, setIsActive] = useState(false);
+  const [formValues, setFormValues] = useState(null);
   const [initialValues, setInitialValues] = useState({
     name: '',
     surname: '',
@@ -38,7 +39,7 @@ const App = () => {
     type: 'nostatus',
     from: '',
     to: ''
-  })
+  });
   /* ------------------------------------------ */
 
   // - useEffect
@@ -72,7 +73,9 @@ const App = () => {
       setFormValues,
       setInitialValues,
       postClick,
-      setPostClick
+      setPostClick,
+      isActive,
+      setIsActive
     }}>
       <Router>
         <Navbar />

@@ -63,7 +63,8 @@ const WorkerForm = () => {
         initialValues,
         formValues,
         postClick,
-        setPostClick
+        setPostClick,
+        setIsActive
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -102,6 +103,7 @@ const WorkerForm = () => {
     }
 
     const cancelUpdate = () => {
+        setIsActive(false)
         setIsUpdating(false)
     }
     /* ------------------------------------------ */
