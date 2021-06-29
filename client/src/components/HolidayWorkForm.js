@@ -1,12 +1,17 @@
 // libs
 import React, { useContext } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import { WorkersContext } from '../App';
 import axios from 'axios';
+import * as Yup from 'yup';
 /* ------------------------------------------ */
 
 // material-ui components
 import { Container, makeStyles, Grid, TextField, Button, Typography } from '@material-ui/core';
+/* ------------------------------------------ */
+
+// custom components
+import TextError from './TextError'
 /* ------------------------------------------ */
 
 // material-ui makeStyles
@@ -39,6 +44,13 @@ const useStyles = makeStyles(() => ({
 }));
 /* ------------------------------------------ */
 
+// Yup validation
+const validationSchema = Yup.object({
+    from: Yup.string().matches(/^\d{4}.\d{2}.\d{2}$/, 'Neteisingas datos formatas ( turi būti metai-mėnesis-diena )'),
+    to: Yup.string().matches(/^\d{4}.\d{2}.\d{2}$/, 'Neteisingas datos formatas ( turi būti metai-mėnesis-diena )')
+})
+/* ------------------------------------------ */
+
 const HolidayWorkForm = () => {
     // hooks
     // - useContext
@@ -49,8 +61,6 @@ const HolidayWorkForm = () => {
         updatingId,
         initialValues,
         formValues,
-        postClick,
-        setPostClick
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -73,13 +83,14 @@ const HolidayWorkForm = () => {
     /* ------------------------------------------ */
 
     const classes = useStyles();
-
+    
     return (
         <Container maxWidth="md" className={classes.root}>
             <Formik
                 initialValues={isUpdating ? formValues : initialValues}
                 onSubmit={onSubmit}
                 enableReinitialize
+                validationSchema={validationSchema}
             >
                 {props => (
                     <Form>
@@ -113,6 +124,7 @@ const HolidayWorkForm = () => {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     className={classes.textField}
+                                    disabled={!isUpdating}
                                     type="text"
                                     id='from'
                                     name='from'
@@ -120,11 +132,14 @@ const HolidayWorkForm = () => {
                                     variant="outlined"
                                     value={props.values.from}
                                     onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
                                 />
+                                <ErrorMessage name='from' component={TextError} />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     className={classes.textField}
+                                    disabled={!isUpdating}
                                     type="text"
                                     id='to'
                                     name='to'
@@ -132,7 +147,9 @@ const HolidayWorkForm = () => {
                                     variant="outlined"
                                     value={props.values.to}
                                     onChange={props.handleChange}
+                                    onBlur={props.handleBlur}
                                 />
+                                <ErrorMessage name='to' component={TextError} />
                             </Grid>
                             <Grid item xs={12} style={{ display: 'flex' }}>
                                 <Button className={classes.button} variant="contained" color="secondary" onClick={cancelUpdate}>

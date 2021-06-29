@@ -21,6 +21,12 @@ const useStyles = makeStyles(() => ({
     },
     table: {
         marginBottom: '50px'
+    },
+    green: {
+        backgroundColor: '#66cca4'
+    },
+    red: {
+        backgroundColor: '#d70024'
     }
 }));
 /* ------------------------------------------ */
@@ -45,6 +51,13 @@ const HolidayWorkTable = () => {
     /* ------------------------------------------ */
 
     // functions
+    const dateChecker = (string) => {
+        const dateTo = new Date(string);
+        const dateNow = new Date()
+        if (dateTo > dateNow) return true
+        else if (dateTo <= dateNow) return false
+    }
+
     const mapArr = (arr, tableHeader) => {
         return (
             <Container maxWidth='lg'>
@@ -67,7 +80,7 @@ const HolidayWorkTable = () => {
                                 <td width='20%'>{worker.surname}</td>
                                 <td width='20%'>{worker.personalCode}</td>
                                 <td width='20%'>{worker.from}</td>
-                                <td width='20%'>{worker.to}</td>
+                                <td width='20%' className={dateChecker(worker.to) ? classes.green : classes.red}>{worker.to}</td>
                                 <td width='20%'>
                                     <Button
                                         component='span'
@@ -88,6 +101,7 @@ const HolidayWorkTable = () => {
         )
     }
 
+
     const handleUpdate = (worker) => {
         setFormValues({
             name: worker.name,
@@ -105,15 +119,34 @@ const HolidayWorkTable = () => {
     }
     /* ------------------------------------------ */
 
-    /* ------------------------------------------ */
-
     const classes = useStyles();
     console.log(workers)
     return (
         <Box className={classes.container}>
             {mapArr(holidayArray, 'Atostogose')}
             {mapArr(workArray, 'Komandiruotėse')}
-            {mapArr(noStatusArray, 'Be statuso')}
+            <Container maxWidth='md'>
+                <Typography gutterBottom={true} align='center' variant='h6'>Be statuso</Typography>
+                <Table bordered hover size="xs" className={classes.table} >
+                    <thead className={classes.header}>
+                        <tr>
+                            <th>Vardas</th>
+                            <th>Pavardė</th>
+                            <th>Asmens kodas</th>
+                        </tr>
+                    </thead>
+                    {noStatusArray.map((worker) => (
+                        <tbody key={worker._id}>
+                            <tr>
+                                <td width='20%'>{worker.name}</td>
+                                <td width='20%'>{worker.surname}</td>
+                                <td width='20%'>{worker.personalCode}</td>
+                            </tr>
+                        </tbody>
+
+                    ))}
+                </Table >
+            </Container>
         </Box>
     )
 }

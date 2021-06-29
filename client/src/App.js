@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Workers from './pages/Workers';
 import HolidayWorkSchedule from './pages/HolidayWorkSchedule';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 /* ------------------------------------------ */
 
 // css
@@ -81,6 +82,7 @@ const App = () => {
             <HolidayWorkSchedule />
           </Route>
         </Switch>
+        <Footer />
       </Router>
     </WorkersContext.Provider>
   )
