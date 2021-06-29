@@ -55,7 +55,7 @@ function WorkerTable() {
     const classes = useStyles();
 
     return (
-        <Table bordered hover size="md" style={{ margin: '100px auto', width: '75vw' }}>
+        <Table bordered hover size="md" style={{ margin: '100px auto', width: '75vw', maxHeight: '800px', overflowX: 'scroll' }}>
             <thead className={classes.header}>
                 <tr>
                     <th>Vardas</th>

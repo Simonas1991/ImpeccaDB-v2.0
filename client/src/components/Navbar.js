@@ -14,6 +14,7 @@ const Navbar = () => {
             <img className='navbar-container__logo' src={Logo} alt="" />
             <div className='navbar-container__list'>
                 <ul>
+                    <li><Link to='/login'>Prisijungti</Link></li>
                     <li><Link to='/workers'>Darbuotojų sąrašas</Link></li>
                     <li><Link to='/holiday-work-schedule'>Atostogų/Komandiruočių tvarkaraštis</Link></li>
                 </ul>

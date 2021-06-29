@@ -14,6 +14,9 @@ import { makeStyles, Typography, Box, Button, Container } from '@material-ui/cor
 // material-ui makeStyles
 const useStyles = makeStyles(() => ({
     header: {
+        fontFamily: 'Poppins'
+    },
+    tableHeader: {
         backgroundColor: '#E8EAE3'
     },
     container: {
@@ -61,9 +64,9 @@ const HolidayWorkTable = () => {
     const mapArr = (arr, tableHeader) => {
         return (
             <Container maxWidth='lg'>
-                <Typography gutterBottom={true} align='center' variant='h6'>{tableHeader}</Typography>
+                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>{tableHeader}</Typography>
                 <Table bordered hover size="sm" className={classes.table} >
-                    <thead className={classes.header}>
+                    <thead className={classes.tableHeader}>
                         <tr>
                             <th>Vardas</th>
                             <th>Pavardė</th>
@@ -126,9 +129,9 @@ const HolidayWorkTable = () => {
             {mapArr(holidayArray, 'Atostogose')}
             {mapArr(workArray, 'Komandiruotėse')}
             <Container maxWidth='md'>
-                <Typography gutterBottom={true} align='center' variant='h6'>Be statuso</Typography>
+                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>Be statuso</Typography>
                 <Table bordered hover size="xs" className={classes.table} >
-                    <thead className={classes.header}>
+                    <thead className={classes.tableHeader}>
                         <tr>
                             <th>Vardas</th>
                             <th>Pavardė</th>

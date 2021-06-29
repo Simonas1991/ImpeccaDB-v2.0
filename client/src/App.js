@@ -6,12 +6,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // components
 import Workers from './pages/Workers';
 import HolidayWorkSchedule from './pages/HolidayWorkSchedule';
+import Login from './pages/Login'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 /* ------------------------------------------ */
 
 // css
 import './App.css';
+import '@fontsource/roboto';
 /* ------------------------------------------ */
 
 // context
@@ -75,6 +77,9 @@ const App = () => {
       <Router>
         <Navbar />
         <Switch>
+          <Route exact path='/login'>
+            <Login />
+          </Route>
           <Route exact path='/workers'>
             <Workers />
           </Route>
