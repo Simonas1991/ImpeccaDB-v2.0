@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // components
 import Workers from './pages/Workers';
-import Navbar from './components/Navbar'
+import HolidayWorkSchedule from './pages/HolidayWorkSchedule';
+import Navbar from './components/Navbar';
 /* ------------------------------------------ */
 
 // css
@@ -46,7 +47,6 @@ const App = () => {
     try {
       const response = await fetch(`http://localhost:8080/workers`)
       const data = await response.json();
-      console.log(data)
       setWorkers(data)
     }
     catch (err) {
@@ -74,6 +74,9 @@ const App = () => {
         <Switch>
           <Route exact path='/workers'>
             <Workers />
+          </Route>
+          <Route exact path='/holiday-work-schedule'>
+            <HolidayWorkSchedule />
           </Route>
         </Switch>
       </Router>
