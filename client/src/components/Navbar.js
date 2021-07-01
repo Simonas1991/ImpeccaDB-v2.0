@@ -3,6 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 /* ------------------------------------------ */
 
+// material-ui components
+import { Button,Typography } from '@material-ui/core';
+/* ------------------------------------------ */
+
 // custom css
 import './Navbar.css';
 /* ------------------------------------------ */
@@ -19,7 +23,7 @@ const Navbar = ({handleLogout}) => {
                 <ul>
                     <li><Link to='/workers'>Darbuotojų sąrašas</Link></li>
                     <li><Link to='/holiday-work-schedule'>Atostogų/Komandiruočių tvarkaraštis</Link></li>
-                    <li><button onClick={handleLogout}>Logout</button></li>
+                    <li><Button variant='outlined' onClick={handleLogout}><Typography>Atsijungti</Typography></Button></li>
                 </ul>
             </div>
         </nav>
