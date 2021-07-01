@@ -1,12 +1,13 @@
 // libs
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import fire from './fire';
 /* ------------------------------------------ */
 
 // components
 import Workers from './pages/Workers';
 import HolidayWorkSchedule from './pages/HolidayWorkSchedule';
-import Login from './pages/Login'
+import Login from './components/Login'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 /* ------------------------------------------ */
@@ -40,6 +41,13 @@ const App = () => {
     from: '',
     to: ''
   });
+
+  // - useState ( LOGIN )
+  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   /* ------------------------------------------ */
 
   // - useEffect
@@ -59,8 +67,57 @@ const App = () => {
       console.log(err)
     }
   };
-  /* ------------------------------------------ */
+  //- LOGIN functions
+  const clearInputs = () => {
+    setEmail('');
+    setPassword('');
+  }
 
+  const clearErrors = () => {
+    setEmailError('');
+    setPasswordError('');
+  }
+
+  const handleLogin = () => {
+    clearErrors();
+    fire
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(err => {
+        switch (err.code) {
+          case 'auth/invalid-email':
+          case 'auth/user-disabled':
+          case 'auth/user-not-found':
+            setEmailError(err.message);
+            break;
+          case 'auth/wrong-password':
+            setPasswordError(err.message);
+            break;
+          default: break;
+        }
+      })
+  }
+
+  const authListener = () => {
+    fire.auth().onAuthStateChanged(user => {
+      if (user) {
+        clearInputs();
+        setUser(user);
+      } else {
+        setUser('')
+      }
+    })
+  }
+
+  const handleLogout = () => {
+    fire.auth().signOut();
+  }
+
+  useEffect(() => {
+    authListener();
+  })
+  /* ------------------------------------------ */
+  console.log(user)
   return (
     <WorkersContext.Provider value={{
       workers,
@@ -75,23 +132,33 @@ const App = () => {
       postClick,
       setPostClick,
       isActive,
-      setIsActive
+      setIsActive,
+      handleLogout
     }}>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path='/login'>
-            <Login />
-          </Route>
-          <Route exact path='/workers'>
-            <Workers />
-          </Route>
-          <Route exact path='/holiday-work-schedule'>
-            <HolidayWorkSchedule />
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
+      {user ?
+        <Router>
+          <Navbar handleLogout={handleLogout}/>
+          <Switch>
+            <Route exact path='/workers'>
+              <Workers />
+            </Route>
+            <Route exact path='/holiday-work-schedule'>
+              <HolidayWorkSchedule />
+            </Route>
+          </Switch>
+        </Router>
+        :
+        <Login
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+          emailError={emailError}
+          passwordError={passwordError}
+        />
+      }
+      <Footer />
     </WorkersContext.Provider>
   )
 }

@@ -61,7 +61,6 @@ const HolidayWorkForm = () => {
         updatingId,
         initialValues,
         formValues,
-        isActive,
         setIsActive
     } = workersContext;
     /* ------------------------------------------ */

@@ -1,5 +1,5 @@
 // libs
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
@@ -28,9 +28,6 @@ const useStyles = makeStyles(() => ({
 
 function WorkerTable() {
     // hooks
-    // - useState
-
-
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
