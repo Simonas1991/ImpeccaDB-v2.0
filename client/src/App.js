@@ -15,6 +15,7 @@ import Footer from './components/Footer';
 // css
 import './App.css';
 import '@fontsource/roboto';
+import NavbarLogin from './components/NavbarLogin';
 /* ------------------------------------------ */
 
 // context
@@ -137,7 +138,7 @@ const App = () => {
     }}>
       {user ?
         <Router>
-          <Navbar handleLogout={handleLogout}/>
+          <Navbar handleLogout={handleLogout} />
           <Switch>
             <Route exact path='/workers'>
               <Workers />
@@ -148,15 +149,18 @@ const App = () => {
           </Switch>
         </Router>
         :
-        <Login
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-          emailError={emailError}
-          passwordError={passwordError}
-        />
+        <>
+          <NavbarLogin />
+          <Login
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            handleLogin={handleLogin}
+            emailError={emailError}
+            passwordError={passwordError}
+          />
+        </>
       }
       <Footer />
     </WorkersContext.Provider>
