@@ -2,6 +2,14 @@
 import React from 'react';
 // -------------------------------------------------------->
 
+// custom css
+import './Login.css';
+// -------------------------------------------------------->
+
+// material-ui components
+import { Button } from '@material-ui/core';
+/* ------------------------------------------ */
+
 const Login = (props) => {
     const {
         email,
@@ -34,7 +42,7 @@ const Login = (props) => {
                 />
                 <p className='errorMsg'>{passwordError}</p>
                 <div className="btnContainer">
-                    <button onClick={handleLogin}>Sign in</button>
+                    < Button onClick={handleLogin}>Sign in</Button>
                 </div>
             </div>
         </section>

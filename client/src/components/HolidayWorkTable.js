@@ -131,6 +131,7 @@ const HolidayWorkTable = () => {
     /* ------------------------------------------ */
 
     const classes = useStyles();
+    
     return (
         <Box className={classes.container}>
             {mapArr(holidayArray, 'Atostogose')}

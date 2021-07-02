@@ -5,6 +5,7 @@ import fire from './fire';
 /* ------------------------------------------ */
 
 // components
+import Home from './pages/Home';
 import Workers from './pages/Workers';
 import HolidayWorkSchedule from './pages/HolidayWorkSchedule';
 import Login from './components/Login'
@@ -140,6 +141,9 @@ const App = () => {
         <Router>
           <Navbar handleLogout={handleLogout} />
           <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
             <Route exact path='/workers'>
               <Workers />
             </Route>
