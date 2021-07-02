@@ -119,7 +119,7 @@ const App = () => {
     authListener();
   })
   /* ------------------------------------------ */
-  console.log(user)
+  
   return (
     <WorkersContext.Provider value={{
       workers,

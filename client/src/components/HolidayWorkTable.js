@@ -8,16 +8,18 @@ import Table from 'react-bootstrap/Table';
 /* ------------------------------------------ */
 
 // material-ui components
-import { makeStyles, Typography, Box, Button, Container, Paper } from '@material-ui/core';
+import { makeStyles, Typography, Box, Button, Container, TableContainer, Paper, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // material-ui makeStyles
 const useStyles = makeStyles(() => ({
-    header: {
-        fontFamily: 'Poppins'
-    },
+    
     tableHeader: {
-        backgroundColor: '#E8EAE3'
+        fontFamily: 'Poppins',
+        position: 'sticky',
+        backgroundColor: "#E8EAE3",
+        top: '-1px',
+        zIndex: 1
     },
     container: {
         padding: '2rem 12rem',
@@ -67,31 +69,31 @@ const HolidayWorkTable = () => {
         else if (dateTo <= dateNow) return false
     }
 
-    const mapArr = (arr, tableHeader) => {
+    const mapArr = (arr, header) => {
         return (
-            <Container maxWidth='lg'>
-                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>{tableHeader}</Typography>
-                <Paper elevation={2}>
-                    <Table bordered hover size="sm" className={classes.table} >
-                        <thead className={classes.tableHeader}>
-                            <tr>
-                                <th>Vardas</th>
-                                <th>Pavardė</th>
-                                <th>Asmens kodas</th>
-                                <th>Nuo</th>
-                                <th>Iki</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        {arr.map((worker) => (
-                            <tbody key={worker._id}>
-                                <tr className={updatingId === worker._id && isActive ? classes.active : null}>
-                                    <td width='20%'>{worker.name}</td>
-                                    <td width='20%'>{worker.surname}</td>
-                                    <td width='20%'>{worker.personalCode}</td>
-                                    <td width='20%'>{worker.from}</td>
-                                    <td width='20%' className={dateChecker(worker.to) ? classes.green : classes.red}>{worker.to}</td>
-                                    <td width='20%'>
+            <>
+                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>{header}</Typography>
+                <TableContainer component={Paper} style={{ margin: '0 auto 100px', maxWidth: '1250px', maxHeight: '500px' }}>
+                    <Table>
+                        <TableHead className={classes.tableHeader}>
+                            <TableRow>
+                                <TableCell align="center">Vardas</TableCell>
+                                <TableCell align="center">Pavardė</TableCell>
+                                <TableCell align="center">Asmens kodas</TableCell>
+                                <TableCell align="center">Nuo</TableCell>
+                                <TableCell align="center">Iki</TableCell>
+                                <TableCell align="center"></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {arr.map((worker) => (
+                                <TableRow hover={true} key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
+                                    <TableCell align="center">{worker.name}</TableCell>
+                                    <TableCell align="center">{worker.surname}</TableCell>
+                                    <TableCell align="center">{worker.personalCode}</TableCell>
+                                    <TableCell align="center">{worker.from}</TableCell>
+                                    <TableCell align="center" className={dateChecker(worker.to) ? classes.green : classes.red}>{worker.to}</TableCell>
+                                    <TableCell align="center">
                                         <Button
                                             component='span'
                                             className={classes.button}
@@ -101,14 +103,13 @@ const HolidayWorkTable = () => {
                                         >
                                             Keisti
                                         </Button>
-                                    </td>
-                                </tr>
-                            </tbody>
-
-                        ))}
-                    </Table >
-                </Paper>
-            </Container>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </>
         )
     }
 
@@ -131,33 +132,34 @@ const HolidayWorkTable = () => {
     /* ------------------------------------------ */
 
     const classes = useStyles();
-    
+
     return (
         <Box className={classes.container}>
             {mapArr(holidayArray, 'Atostogose')}
             {mapArr(workArray, 'Komandiruotėse')}
             <Container maxWidth='md'>
                 <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>Be statuso</Typography>
-                <Paper elevation={2}>
-                    <Table bordered hover size="xs" className={classes.table} >
-                        <thead className={classes.tableHeader}>
-                            <tr>
-                                <th>Vardas</th>
-                                <th>Pavardė</th>
-                                <th>Asmens kodas</th>
-                            </tr>
-                        </thead>
-                        {noStatusArray.map((worker) => (
-                            <tbody key={worker._id}>
-                                <tr>
-                                    <td width='20%'>{worker.name}</td>
-                                    <td width='20%'>{worker.surname}</td>
-                                    <td width='20%'>{worker.personalCode}</td>
-                                </tr>
-                            </tbody>
-                        ))}
-                    </Table >
-                </Paper>
+                <TableContainer component={Paper} style={{ margin: '0 auto 100px', maxWidth: '1250px', maxHeight: '500px' }}>
+                    <Table>
+                        <TableHead className={classes.tableHeader}>
+                            <TableRow>
+                                <TableCell align="center">Vardas</TableCell>
+                                <TableCell align="center">Pavardė</TableCell>
+                                <TableCell align="center">Asmens kodas</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {noStatusArray.map((worker) => (
+                                <TableRow hover={true} key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
+                                    <TableCell align="center">{worker.name}</TableCell>
+                                    <TableCell align="center">{worker.surname}</TableCell>
+                                    <TableCell align="center">{worker.personalCode}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
             </Container>
         </Box>
     )

@@ -4,7 +4,7 @@ import { WorkersContext } from '../App';
 /* ------------------------------------------ */
 
 // material-ui components
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, TableContainer, Paper, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 /* ------------------------------------------ */
 
 // bootstrap
@@ -18,7 +18,10 @@ const useStyles = makeStyles(() => ({
         borderRadius: '8px'
     },
     header: {
-        backgroundColor: '#E8EAE3'
+        position: 'sticky',
+        backgroundColor: "#E8EAE3",
+        top: '-1px',
+        zIndex: 1
     },
     active: {
         backgroundColor: '#E8EAE3'
@@ -62,41 +65,43 @@ function WorkerTable() {
     const classes = useStyles();
 
     return (
-        <Table bordered hover size="md" style={{ margin: '100px auto', width: '75vw', maxHeight: '800px', overflowX: 'scroll' }}>
-            <thead className={classes.header}>
-                <tr>
-                    <th>Vardas</th>
-                    <th>Pavardė</th>
-                    <th>Asmens kodas</th>
-                    <th>Adresas</th>
-                    <th>Tel. nr.</th>
-                    <th>El. paštas</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {workers.map(worker => (
-                    <tr key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
-                        <td>{worker.name}</td>
-                        <td>{worker.surname}</td>
-                        <td>{worker.personalCode}</td>
-                        <td>{worker.address}</td>
-                        <td>{worker.number}</td>
-                        <td>{worker.email}</td>
-                        <td>
-                            <Button
-                                component='span'
-                                className={classes.button}
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => handleUpdate(worker)}>
-                                Keisti
-                            </Button>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
+        <TableContainer component={Paper} style={{ margin: '100px auto', maxWidth: '1250px', maxHeight: '600px' }}>
+            <Table>
+                <TableHead className={classes.header}>
+                    <TableRow>
+                        <TableCell align="center">Vardas</TableCell>
+                        <TableCell align="center">Pavardė</TableCell>
+                        <TableCell align="center">Asmens kodas</TableCell>
+                        <TableCell align="center">Adresas</TableCell>
+                        <TableCell align="center">Tel. nr.</TableCell>
+                        <TableCell align="center">El. paštas</TableCell>
+                        <TableCell align="center"></TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {workers.map((worker) => (
+                        <TableRow hover={true} key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
+                            <TableCell align="center">{worker.name}</TableCell>
+                            <TableCell align="center">{worker.surname}</TableCell>
+                            <TableCell align="center">{worker.personalCode}</TableCell>
+                            <TableCell align="center">{worker.address}</TableCell>
+                            <TableCell align="center">{worker.number}</TableCell>
+                            <TableCell align="center">{worker.email}</TableCell>
+                            <TableCell align="center">
+                                <Button
+                                    component='span'
+                                    className={classes.button}
+                                    variant="outlined"
+                                    color="primary"
+                                    onClick={() => handleUpdate(worker)}>
+                                    Keisti
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
 
