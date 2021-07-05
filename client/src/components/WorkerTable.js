@@ -48,6 +48,7 @@ function WorkerTable() {
     // functions
     const handleUpdate = (worker) => {
         setFormValues({
+            employeeNr: worker.employeeNr,
             name: worker.name,
             surname: worker.surname,
             personalCode: worker.personalCode,
@@ -62,6 +63,12 @@ function WorkerTable() {
     }
     /* ------------------------------------------ */
 
+    // sorting workers array by employee number
+    const sortedWorkers = workers.sort(function (a, b) {
+        return a.employeeNr - b.employeeNr
+    })
+    /* ------------------------------------------ */
+
     const classes = useStyles();
 
     return (
@@ -69,6 +76,7 @@ function WorkerTable() {
             <Table>
                 <TableHead className={classes.header}>
                     <TableRow>
+                        <TableCell align="center">Nr.</TableCell>
                         <TableCell align="center">Vardas</TableCell>
                         <TableCell align="center">Pavardė</TableCell>
                         <TableCell align="center">Asmens kodas</TableCell>
@@ -79,8 +87,9 @@ function WorkerTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {workers.map((worker) => (
+                    {sortedWorkers.map((worker) => (
                         <TableRow hover={true} key={worker._id} className={updatingId === worker._id && isActive ? classes.active : null}>
+                            <TableCell align="center">{worker.employeeNr}</TableCell>
                             <TableCell align="center">{worker.name}</TableCell>
                             <TableCell align="center">{worker.surname}</TableCell>
                             <TableCell align="center">{worker.personalCode}</TableCell>

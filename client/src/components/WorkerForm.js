@@ -74,6 +74,7 @@ const WorkerForm = () => {
             try {
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
                 setIsUpdating(false)
+                setIsActive(false)
             }
             catch (err) {
                 console.log(err)
@@ -201,6 +202,18 @@ const WorkerForm = () => {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    className={classes.textField}
+                                    type="text"
+                                    id='employeeNr'
+                                    name='employeeNr'
+                                    label="Nr."
+                                    variant="outlined"
+                                    value={props.values.employeeNr}
+                                    onChange={props.handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
                                     id="type"
                                     name='type'
                                     select
@@ -248,7 +261,6 @@ const WorkerForm = () => {
                         </Grid>
                     </Form>
                 )}
-
             </Formik>
         </Container>
     )

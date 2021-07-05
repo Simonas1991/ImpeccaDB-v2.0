@@ -25,7 +25,7 @@ export const WorkersContext = React.createContext();
 
 const App = () => {
   // hooks
-  // - useState
+  // - useState (Forms, Tables)
   const [workers, setWorkers] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [postClick, setPostClick] = useState(false);
@@ -33,6 +33,7 @@ const App = () => {
   const [isActive, setIsActive] = useState(false);
   const [formValues, setFormValues] = useState(null);
   const [initialValues, setInitialValues] = useState({
+    employeeNr: '',
     name: '',
     surname: '',
     personalCode: '',
@@ -59,16 +60,22 @@ const App = () => {
   /* ------------------------------------------ */
 
   // functions
+
   const getWorkers = async () => {
     try {
       const response = await fetch(`http://localhost:8080/workers`)
       const data = await response.json();
+      console.log(data.length)
+      console.log(data)
+      let lastWorker = data[1]
+      console.log(lastWorker)
       setWorkers(data)
     }
     catch (err) {
       console.log(err)
     }
   };
+
   //- LOGIN functions
   const clearInputs = () => {
     setEmail('');
@@ -119,7 +126,7 @@ const App = () => {
     authListener();
   })
   /* ------------------------------------------ */
-  
+
   return (
     <WorkersContext.Provider value={{
       workers,

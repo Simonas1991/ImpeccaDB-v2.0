@@ -37,6 +37,10 @@ const schema = new mongoose.Schema(
         to: {
             type: String,
             required: false
+        },
+        employeeNr: {
+            type: String,
+            required: true
         }
     },
     {
