@@ -49,7 +49,7 @@ const validationSchema = Yup.object({
     name: Yup.string().required('Įveskite vardą'),
     surname: Yup.string().required('Įveskite pavardę'),
     email: Yup.string().email('Neteisingas el. pašto formatas'),
-    employeeNr: Yup.string().required('Darbuotojo numeris privalomas')
+    employeeNr: Yup.string().required('Darbuotojo numeris privalomas').matches(/^(.*[^0-9]|)(1000|[1-9]\d{0,2})([^0-9].*|)$/, 'Neteisingas darbuotojo nr. formatas ( turi būti skaičius nuo 1 iki 1000)')
 })
 /* ------------------------------------------ */
 
@@ -208,10 +208,11 @@ const WorkerForm = () => {
                                         type="text"
                                         id='employeeNr'
                                         name='employeeNr'
-                                        label="Nr."
+                                        label="Darbuotojo nr."
                                         variant="outlined"
                                         value={props.values.employeeNr}
                                         onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
                                     />
                                     <ErrorMessage name='employeeNr' component={TextError} />
                                 </Grid>
