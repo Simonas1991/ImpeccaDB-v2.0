@@ -13,7 +13,6 @@ import { makeStyles, Typography, Box, Button, Container, TableContainer, Paper, 
 
 // material-ui makeStyles
 const useStyles = makeStyles(() => ({
-    
     tableHeader: {
         fontFamily: 'Poppins',
         position: 'sticky',
@@ -26,6 +25,9 @@ const useStyles = makeStyles(() => ({
     },
     table: {
         marginBottom: '50px'
+    },
+    white: {
+        color: '#fff'
     },
     green: {
         backgroundColor: '#66cca4'
@@ -72,7 +74,7 @@ const HolidayWorkTable = () => {
     const mapArr = (arr, header) => {
         return (
             <>
-                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>{header}</Typography>
+                <Typography gutterBottom={true} align='center' variant='h6' className={classes.white}>{header}</Typography>
                 <TableContainer component={Paper} style={{ margin: '0 auto 100px', maxWidth: '1250px', maxHeight: '500px' }}>
                     <Table>
                         <TableHead className={classes.tableHeader}>
@@ -138,7 +140,7 @@ const HolidayWorkTable = () => {
             {mapArr(holidayArray, 'Atostogose')}
             {mapArr(workArray, 'Komandiruotėse')}
             <Container maxWidth='md'>
-                <Typography gutterBottom={true} align='center' variant='h6' className={classes.header}>Be statuso</Typography>
+                <Typography gutterBottom={true} align='center' variant='h6' className={classes.white}>Be statuso</Typography>
                 <TableContainer component={Paper} style={{ margin: '0 auto 100px', maxWidth: '1250px', maxHeight: '500px' }}>
                     <Table>
                         <TableHead className={classes.tableHeader}>

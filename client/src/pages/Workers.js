@@ -16,7 +16,8 @@ const Workers = () => {
         <div style={{
             backgroundImage: `url(${Hero})`,
             backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat'
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center'
         }}>
             <WorkerTable />
             <WorkerForm />

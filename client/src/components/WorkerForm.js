@@ -48,7 +48,8 @@ const useStyles = makeStyles(() => ({
 const validationSchema = Yup.object({
     name: Yup.string().required('Įveskite vardą'),
     surname: Yup.string().required('Įveskite pavardę'),
-    email: Yup.string().email('Neteisingas el. pašto formatas')
+    email: Yup.string().email('Neteisingas el. pašto formatas'),
+    employeeNr: Yup.string().required('Darbuotojo numeris privalomas')
 })
 /* ------------------------------------------ */
 
@@ -64,7 +65,7 @@ const WorkerForm = () => {
         formValues,
         postClick,
         setPostClick,
-        setIsActive
+        setIsActive,
     } = workersContext;
     /* ------------------------------------------ */
 
@@ -212,6 +213,7 @@ const WorkerForm = () => {
                                         value={props.values.employeeNr}
                                         onChange={props.handleChange}
                                     />
+                                    <ErrorMessage name='employeeNr' component={TextError} />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField

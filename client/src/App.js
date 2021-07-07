@@ -60,15 +60,10 @@ const App = () => {
   /* ------------------------------------------ */
 
   // functions
-
   const getWorkers = async () => {
     try {
       const response = await fetch(`http://localhost:8080/workers`)
       const data = await response.json();
-      console.log(data.length)
-      console.log(data)
-      let lastWorker = data[1]
-      console.log(lastWorker)
       setWorkers(data)
     }
     catch (err) {
@@ -142,7 +137,7 @@ const App = () => {
       setPostClick,
       isActive,
       setIsActive,
-      handleLogout
+      handleLogout,
     }}>
       {user ?
         <Router>
