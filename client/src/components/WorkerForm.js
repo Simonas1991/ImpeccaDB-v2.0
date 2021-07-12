@@ -49,15 +49,16 @@ const validationSchema = Yup.object({
     name: Yup.string().required('Įveskite vardą'),
     surname: Yup.string().required('Įveskite pavardę'),
     email: Yup.string().email('Neteisingas el. pašto formatas'),
-    employeeNr: Yup.string().required('Darbuotojo numeris privalomas').matches(/^(.*[^0-9]|)(1000|[1-9]\d{0,2})([^0-9].*|)$/, 'Neteisingas darbuotojo nr. formatas ( turi būti skaičius nuo 1 iki 1000)')
 })
 /* ------------------------------------------ */
+
 
 const WorkerForm = () => {
     // hooks
     // - useContext
     const workersContext = useContext(WorkersContext);
     let {
+        workers,
         isUpdating,
         setIsUpdating,
         updatingId,
@@ -66,11 +67,15 @@ const WorkerForm = () => {
         postClick,
         setPostClick,
         setIsActive,
+        currentNr,
+        setCurrentNr
     } = workersContext;
     /* ------------------------------------------ */
 
     // formik onSubmit
     const onSubmit = async (values, onSubmitProps) => {
+        setCurrentNr(currentNr + 1)
+
         if (isUpdating) {
             try {
                 await axios.patch(`http://localhost:8080/workers/${updatingId}`, values)
@@ -82,7 +87,7 @@ const WorkerForm = () => {
             }
         } else {
             try {
-                await axios.post('http://localhost:8080/workers/', values)
+                await axios.post('http://localhost:8080/workers/', { ...values, employeeNr: currentNr })
                 setPostClick(!postClick)
                 onSubmitProps.resetForm()
             }
@@ -108,10 +113,11 @@ const WorkerForm = () => {
         setIsActive(false)
         setIsUpdating(false)
     }
+
     /* ------------------------------------------ */
 
     const classes = useStyles();
-
+    console.log(workers)
     return (
         <Box p={3}>
             <Container maxWidth="md" className={classes.root}>
@@ -201,20 +207,6 @@ const WorkerForm = () => {
                                         value={props.values.number}
                                         onChange={props.handleChange}
                                     />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        className={classes.textField}
-                                        type="text"
-                                        id='employeeNr'
-                                        name='employeeNr'
-                                        label="Darbuotojo nr."
-                                        variant="outlined"
-                                        value={props.values.employeeNr}
-                                        onChange={props.handleChange}
-                                        onBlur={props.handleBlur}
-                                    />
-                                    <ErrorMessage name='employeeNr' component={TextError} />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField

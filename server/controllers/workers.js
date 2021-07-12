@@ -12,10 +12,10 @@ const getWorkers = async (req, res) => {
 };
 
 const postWorker = async (req, res) => {
-    const { name, surname, personalCode, address, number, email, type, to, from } = req.body
+    const { name, surname, personalCode, address, number, email, type, to, from, employeeNr } = req.body
 
     try {
-        const newWorker = await new Worker({ name, surname, personalCode, address, number, email, type, to, from })
+        const newWorker = await new Worker({ name, surname, personalCode, address, number, email, type, to, from, employeeNr })
         newWorker.save()
         res.status(200).json('Worker added!')
     }

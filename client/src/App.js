@@ -26,6 +26,7 @@ export const WorkersContext = React.createContext();
 const App = () => {
   // hooks
   // - useState (Forms, Tables)
+  const [currentNr, setCurrentNr] = useState(49)
   const [workers, setWorkers] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [postClick, setPostClick] = useState(false);
@@ -51,12 +52,6 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  /* ------------------------------------------ */
-
-  // - useEffect
-  useEffect(() => {
-    getWorkers()
-  }, [isUpdating, postClick])
   /* ------------------------------------------ */
 
   // functions
@@ -117,6 +112,18 @@ const App = () => {
     fire.auth().signOut();
   }
 
+  // sorting workers array by employee number
+  workers.sort(function (a, b) {
+    return a.employeeNr - b.employeeNr
+  })
+  /* ------------------------------------------ */
+
+  // hooks
+  // - useEffect
+  useEffect(() => {
+    getWorkers()
+  }, [isUpdating, postClick])
+
   useEffect(() => {
     authListener();
   })
@@ -138,6 +145,8 @@ const App = () => {
       isActive,
       setIsActive,
       handleLogout,
+      currentNr,
+      setCurrentNr
     }}>
       {user ?
         <Router>
